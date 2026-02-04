@@ -1,0 +1,113 @@
+
+@import "tailwindcss";
+
+:root {
+  --background: 224 71% 4%;
+  --foreground: 213 31% 91%;
+
+  --card: 224 71% 4%;
+  --card-foreground: 213 31% 91%;
+
+  --popover: 224 71% 4%;
+  --popover-foreground: 213 31% 91%;
+
+  --primary: 189 94% 43%;
+  --primary-foreground: 222.2 47.4% 11.2%;
+
+  --secondary: 222.2 47.4% 11.2%;
+  --secondary-foreground: 210 40% 98%;
+
+  --muted: 215 27.9% 16.9%;
+  --muted-foreground: 217.9 10.6% 64.9%;
+
+  --accent: 271 81% 56%;
+  --accent-foreground: 210 40% 98%;
+
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+
+  --border: 215 27.9% 16.9%;
+  --input: 215 27.9% 16.9%;
+  --ring: 189 94% 43%;
+
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: 224 71% 4%;
+  --foreground: 213 31% 91%;
+  /* ... repeats for dark mode, can be same for now since we are dark by default */
+}
+
+@theme {
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  /* Liquid Glass Tokens */
+  --color-glass-border: rgba(255, 255, 255, 0.1);
+  --color-glass-bg: rgba(0, 0, 0, 0.2);
+  --color-neon-cyan: #00f3ff;
+  --color-neon-purple: #bc13fe;
+}
+
+/* Glassmorphism Utilities */
+/* GPU Acceleration & Performance Tuning */
+.gpu-accelerated {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: transform, opacity;
+}
+
+/* Off-screen rendering optimization */
+.optimize-visibility {
+  content-visibility: auto;
+  contain-intrinsic-size: 1000px; /* Context dependent */
+}
+
+.glass-card {
+  @apply backdrop-blur-xl bg-black/30 border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)];
+}
+
+.glass-panel {
+  @apply bg-black/30 backdrop-blur-xl border border-white/10 rounded-2xl;
+  box-shadow: 0 0 40px -10px rgba(124, 58, 237, 0.1);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, backdrop-filter; /* Optimize composite layer */
+}
+
+.neon-text {
+  text-shadow: 0 0 10px rgba(0, 243, 255, 0.5), 0 0 20px rgba(0, 243, 255, 0.3);
+}
+
+.liquid-gradient {
+  background: radial-gradient(circle at 50% 50%, rgba(76, 29, 149, 0.4), rgba(15, 23, 42, 0));
+}

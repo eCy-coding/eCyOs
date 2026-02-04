@@ -1,0 +1,491 @@
+/* The Council - Multi-Agent Debate UI - Cyberpunk Aesthetic */
+
+.container {
+  background: rgba(10, 10, 35, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 0 40px rgba(0, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+  min-height: 600px;
+}
+
+.container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(0, 255, 255, 0.8) 50%, 
+    transparent
+  );
+  animation: scanline 4s linear infinite;
+}
+
+@keyframes scanline {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(100vh); }
+}
+
+.header {
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #00ffff 0%, #00ff00 50%, #8a2be2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 0.5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.icon {
+  font-size: 2.8rem;
+  filter: drop-shadow(0 0 15px #00ffff);
+}
+
+.subtitle {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+/* Agents Section */
+
+.agentsSection {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: rgba(0, 255, 255, 0.05);
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  border-radius: 8px;
+}
+
+.sectionTitle {
+  color: #00ffff;
+  font-size: 1.1rem;
+  margin: 0 0 1rem 0;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.agentsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.agentCard {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.3s ease;
+}
+
+.agentCard:hover {
+  border-color: rgba(0, 255, 255, 0.6);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.agentAvatar {
+  font-size: 2.5rem;
+  filter: drop-shadow(0 0 10px #00ffff);
+}
+
+.agentInfo {
+  flex: 1;
+}
+
+.agentName {
+  color: #00ffff;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.agentRole {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.25rem;
+}
+
+.agentModel {
+  color: rgba(138, 43, 226, 0.8);
+  font-size: 0.7rem;
+  font-family: 'Courier New', monospace;
+}
+
+/* Input Section */
+
+.inputSection {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: rgba(138, 43, 226, 0.05);
+  border: 1px solid rgba(138, 43, 226, 0.2);
+  border-radius: 8px;
+}
+
+.topicInput {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.9);
+  padding: 1rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  resize: vertical;
+  margin-bottom: 1rem;
+  transition: all 0.2s ease;
+}
+
+.topicInput:focus {
+  outline: none;
+  border-color: #00ffff;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+.topicInput::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.topicInput:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Buttons */
+
+.button {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(0, 255, 255, 0.4);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.9);
+  padding: 0.875rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.button:hover:not(:disabled) {
+  border-color: rgba(0, 255, 255, 0.8);
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.buttonPrimary {
+  background: rgba(0, 255, 255, 0.15);
+  border-color: #00ffff;
+  color: #00ffff;
+}
+
+.buttonPrimary:hover:not(:disabled) {
+  background: rgba(0, 255, 255, 0.25);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+}
+
+.buttonSecondary {
+  background: rgba(138, 43, 226, 0.15);
+  border-color: rgba(138, 43, 226, 0.6);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.buttonSecondary:hover:not(:disabled) {
+  border-color: rgba(138, 43, 226, 0.9);
+  box-shadow: 0 0 20px rgba(138, 43, 226, 0.4);
+}
+
+/* Debate Section */
+
+.debateSection {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.debateHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+}
+
+.debateTopic {
+  color: #00ffff;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0;
+  flex: 1;
+}
+
+.debateStatus {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.statusBadge {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.statusBadge.active {
+  background: rgba(0, 255, 255, 0.2);
+  border: 1px solid rgba(0, 255, 255, 0.6);
+  color: #00ffff;
+  animation: pulse 2s infinite;
+}
+
+.statusBadge.completed {
+  background: rgba(0, 255, 0, 0.2);
+  border: 1px solid rgba(0, 255, 0, 0.6);
+  color: #00ff00;
+}
+
+.statusBadge.failed {
+  background: rgba(255, 0, 0, 0.2);
+  border: 1px solid rgba(255, 0, 0, 0.6);
+  color: #ff6b6b;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.consensusDisplay {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.consensusLabel {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+}
+
+.consensusScore {
+  font-size: 1.8rem;
+  font-weight: 900;
+  font-family: 'Courier New', monospace;
+  text-shadow: 0 0 15px currentColor;
+}
+
+/* Messages */
+
+.messagesContainer {
+  max-height: 500px;
+  overflow-y: auto;
+  margin-bottom: 1.5rem;
+  padding-right: 0.5rem;
+}
+
+.message {
+  background: rgba(0, 0, 0, 0.4);
+  border-left: 3px solid;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+
+.message:hover {
+  background: rgba(0, 0, 0, 0.6);
+  transform: translateX(5px);
+}
+
+.message.proposer {
+  border-color: #00ffff;
+}
+
+.message.critic {
+  border-color: #ff6b6b;
+}
+
+.message.judge {
+  border-color: #00ff00;
+}
+
+.messageHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.messageAvatar {
+  font-size: 1.8rem;
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+.messageInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.messageName {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.messageRole {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.messageTime {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.75rem;
+  font-family: 'Courier New', monospace;
+}
+
+.messageContent {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 0.5rem;
+}
+
+.consensusImpact {
+  color: #00ff00;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.5rem;
+  background: rgba(0, 255, 0, 0.1);
+  border: 1px solid rgba(0, 255, 0, 0.3);
+  border-radius: 4px;
+  text-align: center;
+}
+
+/* Verdict */
+
+.verdictBox {
+  background: rgba(0, 255, 0, 0.1);
+  border: 2px solid rgba(0, 255, 0, 0.4);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.verdictBox h4 {
+  color: #00ff00;
+  font-size: 1.2rem;
+  margin: 0 0 1rem 0;
+  font-weight: 700;
+}
+
+.verdictBox p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* Actions */
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+/* Scrollbar */
+
+.messagesContainer::-webkit-scrollbar {
+  width: 10px;
+}
+
+.messagesContainer::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+}
+
+.messagesContainer::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 255, 0.4);
+  border-radius: 5px;
+}
+
+.messagesContainer::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 255, 0.6);
+}
+
+/* Responsive */
+
+@media (max-width: 968px) {
+  .agentsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .debateHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .consensusScore {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 1.6rem;
+  }
+
+  .messagesContainer {
+    max-height: 400px;
+  }
+
+  .agentCard {
+    flex-direction: column;
+    text-align: center;
+  }
+}

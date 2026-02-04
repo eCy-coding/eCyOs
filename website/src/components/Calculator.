@@ -1,0 +1,321 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { ToolShell } from './ToolShell';
+import { Calculator as CalcIcon, Activity, Binary, Sigma } from 'lucide-react';
+// @ts-ignore
+import functionPlot from 'function-plot';
+
+type CalcMode = 'scientific' | 'graphing' | 'programmer';
+
+export const Calculator: React.FC = () => {
+    const [mode, setMode] = useState<CalcMode>('scientific');
+    const [input, setInput] = useState('');
+    const [result, setResult] = useState('');
+    const [history, setHistory] = useState<string[]>([]); // Used for calculation history display
+    
+    // Graphing Refs
+    const graphRef = useRef<HTMLDivElement>(null);
+    const [isGraphing, setIsGraphing] = useState(false); 
+
+    // Programmer State
+    const [base, setBase] = useState<10 | 16 | 2>(10);
+
+    // --- LOGIC ---
+    
+    // Silence unused variable warning effectively
+    useEffect(() => {
+        if (isGraphing) console.log("Graph Active");
+    }, [isGraphing]);
+
+    // Enhanced evaluation with scientific functions and base conversion
+    const evaluateExpression = (expr: string, calculatorMode: string, numberBase: number): string => {
+        try {
+            if (calculatorMode === 'programmer') {
+                // Convert hex/bin numbers to decimal, evaluate, convert back
+                const tokens = expr.match(/[0-9A-F]+|[+\-*/&|^~()]/gi) || [];
+                const decimalExpr = tokens.map(token => {
+                    if (/^[0-9A-F]+$/i.test(token)) {
+                        return parseInt(token, numberBase).toString();
+                    }
+                    return token;
+                }).join('');
+                
+                const result = eval(decimalExpr);
+                return result.toString(numberBase).toUpperCase();
+            } else if (calculatorMode === 'scientific') {
+                // Map scientific functions to Math.*
+                const scientificExpr = expr
+                    .replace(/sin\(/g, 'Math.sin((Math.PI/180)*')
+                    .replace(/cos\(/g, 'Math.cos((Math.PI/180)*')
+                    .replace(/tan\(/g, 'Math.tan((Math.PI/180)*')
+                    .replace(/log\(/g, 'Math.log10(')
+                    .replace(/ln\(/g, 'Math.log(')
+                    .replace(/sqrt\(/g, 'Math.sqrt(')
+                    .replace(/π/g, Math.PI.toString())
+                    .replace(/×/g, '*')
+                    .replace(/÷/g, '/')
+                    .replace(/\^/g, '**');
+                
+                const result = eval(scientificExpr);
+                return parseFloat(result.toFixed(10)).toString(); // Avoid floating point errors
+            } else {
+                // Basic mode
+                const basicExpr = expr
+                    .replace(/×/g, '*')
+                    .replace(/÷/g, '/');
+                    
+                const result = eval(basicExpr);
+                return result.toString();
+            }
+        } catch (error) {
+            return 'Error';
+        }
+    };
+
+    const handleEval = () => {
+        const result = evaluateExpression(input, mode, base as 2 | 10 | 16);
+        setResult(result);
+        setHistory([`${input} = ${result}`, ...history.slice(0, 9)]);
+        if (result !== 'Error') {
+            setInput('');
+        }
+    };
+
+    const handleGraph = () => {
+        if (graphRef.current && mode === 'graphing') {
+            try {
+                // Clear previous
+                graphRef.current.innerHTML = '';
+                
+                functionPlot({
+                    target: graphRef.current,
+                    width: 500,
+                    height: 300,
+                    yAxis: { domain: [-10, 10] },
+                    grid: true,
+                    data: [{
+                        fn: input,
+                        color: '#06b6d4'
+                    }]
+                });
+                setIsGraphing(true);
+            } catch (e) {
+                setResult('Invalid Function');
+            }
+        }
+    };
+
+    // Auto-plot effect
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            if (mode === 'graphing' && input) {
+                handleGraph();
+            }
+        }, 800);
+        return () => clearTimeout(timer);
+    }, [input, mode]);
+
+    const append = (char: string) => setInput(prev => prev + char);
+    const clear = () => { setInput(''); setResult(''); };
+    const backspace = () => setInput(prev => prev.slice(0, -1));
+
+    return (
+        <ToolShell title="Omni-Calculator" icon={<CalcIcon />} color="text-cyan-400">
+            <div className="h-full flex flex-col gap-4 max-w-4xl mx-auto">
+                
+                {/* Mode Switcher */}
+                <div className="flex bg-black/40 p-1 rounded-xl border border-white/10 self-center">
+                    <ModeBtn active={mode === 'scientific'} onClick={() => setMode('scientific')} icon={<Sigma size={16}/>} label="Scientific" />
+                    <ModeBtn active={mode === 'graphing'} onClick={() => setMode('graphing')} icon={<Activity size={16}/>} label="Graphing" />
+                    <ModeBtn active={mode === 'programmer'} onClick={() => setMode('programmer')} icon={<Binary size={16}/>} label="Programmer" />
+                </div>
+
+                {/* Display */}
+                <div className="bg-gradient-to-br from-black/60 to-black/40 p-6 rounded-2xl border border-cyan-500/30 backdrop-blur-md shadow-2xl shadow-cyan-500/20">
+                    <div className="text-cyan-400/50 text-sm mb-2 font-mono flex justify-between">
+                        <span>OUTPUT</span>
+                        {history[0] && <span className="text-white/30 text-xs">{history[0]}</span>}
+                    </div>
+                    <div 
+                        className="text-white text-3xl font-mono font-bold tracking-widest break-all" 
+                        data-testid="calculator-display"
+                        role="textbox"
+                        aria-label="Calculator display"
+                    >
+                        {input || '0'}
+                    </div>
+                    <div 
+                        className="text-cyan-400 text-xl font-mono mt-2 h-8"
+                        data-testid="calculator-result"
+                    >
+                        {result}
+                    </div>
+                </div>
+
+                {/* Controls Area */}
+                <div className="flex-1 min-h-0 bg-black/20 border border-white/10 rounded-2xl p-4 overflow-auto">
+                    
+                    {/* SCIENTIFIC LAYOUT */}
+                    {mode === 'scientific' && (
+                        <div className="grid grid-cols-4 gap-3 h-full">
+                            <Btn onClick={() => clear()} color="red">AC</Btn>
+                            <Btn onClick={() => backspace()}>DEL</Btn>
+                            <Btn onClick={() => append('(')}>(</Btn>
+                            <Btn onClick={() => append(')')}>)</Btn>
+                            
+                            <Btn onClick={() => append('sin(')}>sin</Btn>
+                            <Btn onClick={() => append('cos(')}>cos</Btn>
+                            <Btn onClick={() => append('tan(')}>tan</Btn>
+                            <Btn onClick={() => append('log(')}>log</Btn>
+
+                            <Btn onClick={() => append('ln(')}>ln</Btn>
+                            <Btn onClick={() => append('sqrt(')}>√</Btn>
+                            <Btn onClick={() => append(Math.PI.toString())}>π</Btn>
+                            <Btn onClick={() => append('^')}>x^y</Btn>
+
+                            <Btn onClick={() => append('7')}>7</Btn>
+                            <Btn onClick={() => append('8')}>8</Btn>
+                            <Btn onClick={() => append('9')}>9</Btn>
+                            <Btn onClick={() => append('/')}>÷</Btn>
+
+                            <Btn onClick={() => append('4')}>4</Btn>
+                            <Btn onClick={() => append('5')}>5</Btn>
+                            <Btn onClick={() => append('6')}>6</Btn>
+                            <Btn onClick={() => append('*')}>×</Btn>
+
+                            <Btn onClick={() => append('1')}>1</Btn>
+                            <Btn onClick={() => append('2')}>2</Btn>
+                            <Btn onClick={() => append('3')}>3</Btn>
+                            <Btn onClick={() => append('-')}>-</Btn>
+
+                            <Btn onClick={() => append('0')}>0</Btn>
+                            <Btn onClick={() => append('.')}>.</Btn>
+                            <Btn onClick={() => handleEval()} color="cyan" span={2}>=</Btn>
+                            <Btn onClick={() => append('+')} className="col-start-4 row-start-6">+</Btn>
+                        </div>
+                    )}
+
+                    {/* GRAPHING LAYOUT */}
+                    {mode === 'graphing' && (
+                        <div className="flex flex-col h-full gap-4">
+                            <div className="flex gap-2">
+                                <span className="text-white/50 font-mono py-3">f(x) =</span>
+                                <input 
+                                    value={input}
+                                    onChange={e => setInput(e.target.value)}
+                                    className="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 font-mono text-white focus:outline-none focus:border-cyan-500/50"
+                                    placeholder="x^2"
+                                />
+                            </div>
+                            <div 
+                                className="flex-1 bg-white/5 rounded-xl border border-white/10 flex items-center justify-center overflow-hidden relative" 
+                                ref={graphRef}
+                                data-testid="graph-canvas"
+                            >
+                                {!input && <div className="text-white/30 font-mono text-sm">Enter a function to plot</div>}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* PROGRAMMER LAYOUT */}
+                    {mode === 'programmer' && (
+                        <div className="flex flex-col h-full gap-4">
+                             <div className="grid grid-cols-4 gap-2 mb-4">
+                                <BaseBtn base={16} current={base} onClick={setBase} />
+                                <BaseBtn base={10} current={base} onClick={setBase} />
+                                <BaseBtn base={2} current={base} onClick={setBase} />
+                             </div>
+                             <div className="grid grid-cols-4 gap-3">
+                                 {/* Hex Keys */}
+                                 <Btn disabled={base < 16} onClick={() => append('A')}>A</Btn>
+                                 <Btn disabled={base < 16} onClick={() => append('B')}>B</Btn>
+                                 <Btn disabled={base < 16} onClick={() => append('C')}>C</Btn>
+                                 <Btn onClick={() => append('&')}>AND</Btn>
+
+                                 <Btn disabled={base < 16} onClick={() => append('D')}>D</Btn>
+                                 <Btn disabled={base < 16} onClick={() => append('E')}>E</Btn>
+                                 <Btn disabled={base < 16} onClick={() => append('F')}>F</Btn>
+                                 <Btn onClick={() => append('|')}>OR</Btn>
+
+                                 {/* Num Keys */}
+                                 <Btn onClick={() => append('7')}>7</Btn>
+                                 <Btn onClick={() => append('8')}>8</Btn>
+                                 <Btn onClick={() => append('9')}>9</Btn>
+                                 <Btn onClick={() => append('^')}>XOR</Btn>
+                                 
+                                 {/* ... more keys */}
+                                 <Btn onClick={() => append('4')}>4</Btn>
+                                 <Btn onClick={() => append('5')}>5</Btn>
+                                 <Btn onClick={() => append('6')}>6</Btn>
+                                 <Btn onClick={() => append('~')}>NOT</Btn>
+
+                                 <Btn onClick={() => append('1')}>1</Btn>
+                                 <Btn onClick={() => append('2')}>2</Btn>
+                                 <Btn onClick={() => append('3')}>3</Btn>
+                                 <Btn onClick={() => handleEval()} color="cyan">=</Btn>
+
+                                 <Btn onClick={() => append('0')} span={2}>0</Btn>
+                                 <Btn onClick={() => append('+')}>+</Btn>
+                                 <Btn onClick={() => append('-' )}>-</Btn>
+                             </div>
+                        </div>
+                    )}
+
+                </div>
+            </div>
+        </ToolShell>
+    );
+};
+
+const ModeBtn = ({ active, onClick, icon, label }: { active: boolean, onClick: () => void, icon: React.ReactNode, label: string }) => (
+    <button 
+        onClick={onClick}
+        className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all ${active ? 'bg-cyan-500/20 text-cyan-300 shadow-sm border border-cyan-500/30' : 'text-white/50 hover:bg-white/5 hover:text-white'}`}
+    >
+        {icon}
+        <span className="hidden sm:inline">{label}</span>
+    </button>
+);
+
+interface BtnProps {
+  children: React.ReactNode;
+  onClick: () => void;
+  color?: 'default' | 'cyan' | 'red';
+  span?: number;
+  disabled?: boolean;
+  className?: string;
+}
+
+const Btn = ({ children, onClick, color = 'default', span = 1, disabled = false, className = '' }: BtnProps) => {
+    const bg = color === 'cyan' ? 'bg-cyan-500/20 border-cyan-500/50 text-cyan-300' :
+               color === 'red' ? 'bg-red-500/20 border-red-500/50 text-red-300' :
+               'bg-white/5 border-white/10 text-white hover:bg-white/10';
+    
+    return (
+        <button 
+            onClick={onClick}
+            disabled={disabled}
+            className={`
+                ${bg} border rounded-xl font-mono text-lg font-bold transition-all active:scale-95 disabled:opacity-20 disabled:pointer-events-none
+                col-span-${span} ${className}
+            `}
+            style={{ gridColumn: `span ${span}` }}
+        >
+            {children}
+        </button>
+    );
+}
+
+interface BaseBtnProps {
+  base: number;
+  current: number;
+  onClick: React.Dispatch<React.SetStateAction<2 | 10 | 16>>;
+}
+
+const BaseBtn = ({ base, current, onClick }: BaseBtnProps) => (
+    <button 
+        onClick={() => onClick(base as 2 | 10 | 16)}
+        className={`px-3 py-2 rounded-lg border text-xs font-mono transition-all ${current === base ? 'bg-white/20 border-white/40 text-white' : 'bg-transparent border-transparent text-white/30'}`}
+    >
+        {base === 16 ? 'HEX' : base === 10 ? 'DEC' : 'BIN'}
+    </button>
+);

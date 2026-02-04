@@ -1,0 +1,341 @@
+/* JWT Debugger - Cyberpunk Aesthetic */
+/* eCy OS v1005.0 - Tier A Utility 5/5 */
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+  border-radius: 16px;
+  border: 1px solid rgba(0, 255, 200, 0.2);
+  box-shadow: 
+    0 0 30px rgba(0, 255, 200, 0.1),
+    inset 0 0 60px rgba(0, 10, 20, 0.5);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid rgba(0, 255, 200, 0.2);
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #00ffc8;
+  text-shadow: 0 0 20px rgba(0, 255, 200, 0.5);
+  margin: 0 0 0.5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.icon {
+  font-size: 2.5rem;
+  filter: drop-shadow(0 0 10px rgba(0, 255, 200, 0.6));
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+}
+
+.inputSection {
+  margin-bottom: 2rem;
+}
+
+.label {
+  display: block;
+  font-size: 1rem;
+  color: #00ffc8;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.textarea {
+  width: 100%;
+  padding: 1.5rem;
+  background: rgba(0, 10, 20, 0.8);
+  border: 1px solid rgba(0, 255, 200, 0.2);
+  border-radius: 12px;
+  color: #ffffff;
+  font-family: 'Fira Code', 'Monaco', 'Courier New', monospace;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  resize: vertical;
+  transition: all 0.3s ease;
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: #00ffc8;
+  box-shadow: 0 0 20px rgba(0, 255, 200, 0.3);
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.button {
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+}
+
+.primary {
+  background: linear-gradient(135deg, #00ffc8 0%, #00d4a8 100%);
+  color: #0a0e27;
+  box-shadow: 0 0 20px rgba(0, 255, 200, 0.3);
+}
+
+.primary:hover {
+  box-shadow: 0 0 30px rgba(0, 255, 200, 0.5);
+}
+
+.secondary {
+  background: rgba(255, 50, 100, 0.2);
+  color: #ff3264;
+  border: 1px solid #ff3264;
+}
+
+.error {
+  padding: 1.5rem;
+  background: rgba(255, 50, 100, 0.1);
+  border: 1px solid rgba(255, 50, 100, 0.3);
+  border-radius: 12px;
+  color: #ff3264;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.errorIcon {
+  font-size: 1.5rem;
+}
+
+.results {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.statusBanner {
+  padding: 1.5rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.statusBanner.valid {
+  background: rgba(0, 255, 150, 0.1);
+  border: 1px solid rgba(0, 255, 150, 0.3);
+  color: #00ff96;
+}
+
+.statusBanner.expired {
+  background: rgba(255, 50, 100, 0.1);
+  border: 1px solid rgba(255, 50, 100, 0.3);
+  color: #ff3264;
+}
+
+.statusBanner.no-exp {
+  background: rgba(0, 180, 255, 0.1);
+  border: 1px solid rgba(0, 180, 255, 0.3);
+  color: #00b4ff;
+}
+
+.statusIcon {
+  font-size: 1.5rem;
+}
+
+.statusText {
+  flex: 1;
+}
+
+.statusDetail {
+  font-size: 0.95rem;
+  opacity: 0.8;
+}
+
+.section {
+  padding: 1.5rem;
+  background: rgba(0, 20, 40, 0.4);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 255, 200, 0.1);
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.sectionTitle {
+  font-size: 1.3rem;
+  color: #00ffc8;
+  margin: 0;
+}
+
+.copyButton {
+  padding: 0.5rem 1rem;
+  background: rgba(0, 255, 200, 0.1);
+  border: 1px solid rgba(0, 255, 200, 0.3);
+  border-radius: 8px;
+  color: #00ffc8;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.copyButton:hover {
+  background: rgba(0, 255, 200, 0.2);
+  box-shadow: 0 0 15px rgba(0, 255, 200, 0.3);
+}
+
+.json {
+  background: rgba(0, 10, 20, 0.8);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 255, 200, 0.1);
+  color: #ffffff;
+  font-family: 'Fira Code', Monaco, monospace;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  overflow-x: auto;
+}
+
+.signature {
+  background: rgba(0, 10, 20, 0.8);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 255, 200, 0.1);
+  color: #00ffc8;
+  font-family: 'Fira Code', Monaco, monospace;
+  font-size: 0.85rem;
+  word-break: break-all;
+  margin-bottom: 1rem;
+}
+
+.signatureNote {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.claims {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(0, 255, 200, 0.1);
+}
+
+.claimsTitle {
+  font-size: 1.1rem;
+  color: #00ffc8;
+  margin: 0 0 1rem 0;
+}
+
+.claimsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.claim {
+  display: flex;
+  gap: 1rem;
+  padding: 0.75rem;
+  background: rgba(0, 20, 40, 0.6);
+  border-radius: 8px;
+  border: 1px solid rgba(0, 255, 200, 0.05);
+}
+
+.claimKey {
+  color: #00ffc8;
+  font-weight: 600;
+  min-width: 150px;
+  font-size: 0.9rem;
+}
+
+.claimValue {
+  color: #ffffff;
+  flex: 1;
+  font-family: 'Fira Code', Monaco, monospace;
+  font-size: 0.9rem;
+}
+
+.samples {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: rgba(0, 20, 40, 0.4);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 255, 200, 0.1);
+}
+
+.samplesTitle {
+  font-size: 1.3rem;
+  color: #00ffc8;
+  margin: 0 0 1rem 0;
+}
+
+.sampleButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.sampleButton {
+  padding: 0.75rem 1.5rem;
+  background: rgba(0, 255, 200, 0.1);
+  border: 1px solid rgba(0, 255, 200, 0.3);
+  border-radius: 8px;
+  color: #00ffc8;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sampleButton:hover {
+  background: rgba(0, 255, 200, 0.2);
+  box-shadow: 0 0 15px rgba(0, 255, 200, 0.3);
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  .title {
+    font-size: 2rem;
+  }
+  
+  .actions {
+    flex-direction: column;
+  }
+  
+  .button {
+    width: 100%;
+  }
+}
