@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-gradient-start: #0f172a; /* Slate 900 */
+  --bg-gradient-end: #020617;   /* Slate 950 */
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-surface: rgba(255, 255, 255, 0.05);
+  --glass-blur: 12px;
+  --neon-primary: #8b5cf6;      /* Violet 500 */
+  --neon-secondary: #06b6d4;    /* Cyan 500 */
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: radial-gradient(circle at top center, var(--bg-gradient-start), var(--bg-gradient-end));
+  color: #e2e8f0;
+  overflow: hidden; /* Prevent scroll */
+  height: 100vh;
+  width: 100vw;
+}
+
+/* Scrollbar Hiding */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+/* Liquid Glass Utilities */
+.liquid-glass {
+  background: var(--glass-surface);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.neon-text {
+  text-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+}
+
+.holo-grid {
+  background-size: 50px 50px;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}

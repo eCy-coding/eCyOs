@@ -1,0 +1,11 @@
+
+default:
+  shell: /bin/zsh
+  cwd: ~
+  env:
+    LANG: en_US.UTF-8
+work:
+  shell: /bin/bash
+  cwd: ~/Desktop
+  env:
+    PROJECT: ecy

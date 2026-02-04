@@ -1,0 +1,83 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+*.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+backend.log
+brain_debug.log
+brain_worker_debug.log
+e2e_debug.log
+
+# Testing
+coverage/
+.nyc_output/
+test-results/
+playwright-report/
+.early.coverage/
+
+# Build outputs
+dist/
+build/
+website/dist/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+broken_script.py
+test.js
+test_*.js
+test_*.py
+repro_cycle.ts
+roman.txt
+debates.jsonl
+EYE_DEBUG.txt
+*.png
+
+# Reports
+REPORTS/
+knip_report*.txt
+.vscode-test
+src/vscode/.vscode-test
+src/vscode/.vscode-test

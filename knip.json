@@ -1,0 +1,41 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "entry": [
+    "src/stage/main/**/*.{ts,tsx}",
+    "src/native/admin/index.tsx",
+    "src/orchestra/**/*.{ts,tsx}",
+    "src/cli.ts",
+    "scripts/**/*.ts",
+    "e2e/**/*.ts",
+    "src/stage/renderer/src/**/*.{ts,tsx}",
+    "src/vscode/src/**/*.{ts,tsx}"
+  ],
+  "project": [
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ],
+  "ignore": [
+    "**/*.d.ts",
+    "src/embedded/**/*",
+    "src/stage/preload/index.ts",
+    "src/vscode/.vscode-test.mjs"
+  ],
+  "ignoreDependencies": [
+    "@electron-toolkit/preload",
+    "electron",
+    "chalk",
+    "playwright",
+    "ollama",
+    "@lancedb/lancedb",
+    "@tensorflow/tfjs",
+    "react-reconciler",
+    "yoga-layout-prebuilt",
+    "ink-text-input",
+    "vscode",
+    "@types/ink-text-input",
+    "@types/react-dom",
+    "@types/winston",
+    "@vitejs/plugin-react",
+    "typescript-eslint"
+  ]
+}

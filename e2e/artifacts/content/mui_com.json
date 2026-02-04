@@ -1,0 +1,7 @@
+{
+  "header": "ProductsDocsPricingAbout usBlogCustomersSearch…⌘KProductsMUI CoreReady-to-use foundational React components, free forever.MUI XAdvanced and powerful components for complex use cases.TemplatesFully built templates for your application.Design KitsMaterial UI components in your favorite design tool.DocsMaterial UIComponent library that implements Google's Material Design.Joy UIComponent library that implements MUI's own in-house design principles.Base UIUnstyled components for building accessible UIs.MUI SystemCSS utilities for rapidly laying out custom designs.MUI XAdvanced components for complex use cases.PricingAbout usBlogCustomers",
+  "metaDescription": "MUI provides a simple, customizable, and accessible library of React components. Follow your own design system, or start with Material Design.",
+  "jsonLd": [
+    "{\"@context\":\"https://schema.org\",\"@type\":\"Organization\",\"name\":\"MUI\",\"url\":\"https://mui.com/\",\"logo\":\"https://mui.com/static/logo.png\",\"sameAs\":[\"https://x.com/MUI_hq\",\"https://github.com/mui/\",\"https://opencollective.com/mui-org\"]}"
+  ]
+}

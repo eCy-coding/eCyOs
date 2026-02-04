@@ -1,0 +1,20 @@
+
+allowed_commands:
+  - git
+  - npm
+  - make
+  - ls
+  - cat
+  - echo
+  - pwd
+  - python
+  - node
+
+privileged_commands:
+  - shutdown
+  - reboot
+  - systemctl
+  - apt-get
+  - yum
+  - brew
+  - rm
