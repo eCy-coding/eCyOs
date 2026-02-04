@@ -11,7 +11,7 @@
  * - Cyberpunk aesthetic
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import styles from './JWTDebugger.module.css';
 
